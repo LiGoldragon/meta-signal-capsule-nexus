@@ -1,5 +1,5 @@
 {
-  description = "meta-signal-herdr-nexus — generated meta herdr-nexus Signal contract";
+  description = "meta-signal-capsule-nexus — generated meta capsule-nexus Signal contract";
 
   inputs = {
     base.url = "github:LiGoldragon/build-base";
@@ -18,7 +18,7 @@
       cargoNix = ./Cargo.nix;
 
       # Every test runs with every feature on.
-      memberChecks = { check, ... }: { meta-signal-herdr-nexus = check "meta-signal-herdr-nexus" [ "default" "datom" ]; };
+      memberChecks = { check, ... }: { meta-signal-capsule-nexus = check "meta-signal-capsule-nexus" [ "default" "datom" ]; };
 
       extraChecks =
         { pkgs, toolchain, check, doc, ... }:
@@ -31,13 +31,13 @@
         in
         {
           # The tests under the default feature set alone.
-          test-default = check "meta-signal-herdr-nexus" [ "default" ];
-          fmt = pkgs.runCommand "meta-signal-herdr-nexus-fmt" { nativeBuildInputs = [ toolchain ]; } ''
+          test-default = check "meta-signal-capsule-nexus" [ "default" ];
+          fmt = pkgs.runCommand "meta-signal-capsule-nexus-fmt" { nativeBuildInputs = [ toolchain ]; } ''
             rustfmt --check --edition ${manifest.package.edition} ${rust}/src/lib.rs ${rust}/tests/*.rs
             touch $out
           '';
-          doc = doc "meta-signal-herdr-nexus" [ "default" "datom" ] [ "-D" "warnings" ];
-          generated = pkgs.runCommand "meta-signal-herdr-nexus-generated" { generator = ethos-zero.packages.${pkgs.stdenv.hostPlatform.system}.default; declaration = ./signal.ethos; committed = ./src/lib.rs; } ''
+          doc = doc "meta-signal-capsule-nexus" [ "default" "datom" ] [ "-D" "warnings" ];
+          generated = pkgs.runCommand "meta-signal-capsule-nexus-generated" { generator = ethos-zero.packages.${pkgs.stdenv.hostPlatform.system}.default; declaration = ./signal.ethos; committed = ./src/lib.rs; } ''
             temporary="$(mktemp -d)"
             "$generator/bin/ethos-zero" "Generate.{ $declaration $temporary }" | grep -q '^Generated'
             cmp "$temporary/$(basename "$declaration" .ethos).rs" "$committed"

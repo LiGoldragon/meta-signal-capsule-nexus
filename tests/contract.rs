@@ -1,13 +1,13 @@
-//! The meta herdr-nexus contract: binary archives round-trip in every build, and datom text
+//! The meta capsule-nexus contract: binary archives round-trip in every build, and datom text
 //! reads, prints and refuses wrong shapes when the `datom` feature is on.
 
-use meta_signal_herdr_nexus::{Query, Response};
+use meta_signal_capsule_nexus::{Query, Response};
 use rkyv::rancor::Error;
 
 #[cfg(feature = "datom")]
 mod text {
     use datom_codec::{Actualizing, Budget, Composing, Datomizable, Path, Potential};
-    use meta_signal_herdr_nexus::{Query, Response};
+    use meta_signal_capsule_nexus::{Query, Response};
     use protos::{Compactable, Protosizable, ReaderBudget};
 
     fn budget() -> Budget {
@@ -87,7 +87,7 @@ where
 
 #[test]
 fn queries_and_responses_survive_the_binary_archive() {
-    use meta_signal_herdr_nexus::{Configured_Data, Owner, Readiness, Set, Timeout};
+    use meta_signal_capsule_nexus::{Configured_Data, Owner, Readiness, Set, Timeout};
     archive_round_trip(&Query::Configure(Set::CallTimeout(Timeout(5000))));
     archive_round_trip(&Response::Configured(Configured_Data {
         set: Set::Polling(Timeout(100)),
