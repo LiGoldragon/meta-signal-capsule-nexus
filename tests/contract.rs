@@ -1,13 +1,13 @@
 //! The meta capsule-nexus contract: binary archives round-trip in every build, and datom text
 //! reads, prints and refuses wrong shapes when the `datom` feature is on.
 
-use meta_signal_capsule_nexus::{Query, Response};
+use meta_signal_capsule_nexus::{Input, Output};
 use rkyv::rancor::Error;
 
 #[cfg(feature = "datom")]
 mod text {
     use datom_codec::{Actualizing, Budget, Composing, Datomizable, Path, Potential};
-    use meta_signal_capsule_nexus::{Query, Response};
+    use meta_signal_capsule_nexus::{Input, Output};
     use protos::{Compactable, Protosizable, ReaderBudget};
 
     fn budget() -> Budget {
@@ -38,27 +38,27 @@ mod text {
 
     #[test]
     fn every_configure_shape_round_trips() {
-        round_trip::<Query>("Configure.HerdrPath.«/run/user/1001/herdr.sock»");
-        round_trip::<Query>("Configure.CallTimeout.5000");
-        round_trip::<Query>("Configure.TextBudget.{ 1024 16 }");
-        round_trip::<Query>("Configure.SubscriberCapacity.8");
-        round_trip::<Query>("Configure.Peer.{ peerOne { 1000 4242 } }");
-        round_trip::<Query>("Configure.RemovePeer.peerOne");
+        round_trip::<Input>("Configure.HerdrPath.«/run/user/1001/herdr.sock»");
+        round_trip::<Input>("Configure.CallTimeout.5000");
+        round_trip::<Input>("Configure.TextBudget.{ 1024 16 }");
+        round_trip::<Input>("Configure.SubscriberCapacity.8");
+        round_trip::<Input>("Configure.Peer.{ peerOne { 1000 4242 } }");
+        round_trip::<Input>("Configure.RemovePeer.peerOne");
     }
 
     #[test]
     fn responses_round_trip() {
-        round_trip::<Response>("Configured.{ CallTimeout.5000 Nexus Ready }");
-        round_trip::<Response>("Configured.{ Polling.100 Translator Awaiting.[ HerdrPath ] }");
-        round_trip::<Response>("ConfigureRefused.UnknownPeer.peerOne");
+        round_trip::<Output>("Configured.{ CallTimeout.5000 Nexus Ready }");
+        round_trip::<Output>("Configured.{ Polling.100 Translator Awaiting.[ HerdrPath ] }");
+        round_trip::<Output>("ConfigureRefused.UnknownPeer.peerOne");
     }
 
     #[test]
     fn wrong_shapes_and_unknown_variants_are_refused() {
-        assert!(read::<Query>("Configure.Frobnicate.1").is_err());
-        assert!(read::<Query>("Configure.TextBudget.{ 1024 }").is_err());
-        assert!(read::<Query>("Configure.CallTimeout.fast").is_err());
-        assert!(read::<Response>("Configured.{ CallTimeout.5000 Nobody Ready }").is_err());
+        assert!(read::<Input>("Configure.Frobnicate.1").is_err());
+        assert!(read::<Input>("Configure.TextBudget.{ 1024 }").is_err());
+        assert!(read::<Input>("Configure.CallTimeout.fast").is_err());
+        assert!(read::<Output>("Configured.{ CallTimeout.5000 Nobody Ready }").is_err());
     }
 }
 
@@ -88,8 +88,8 @@ where
 #[test]
 fn queries_and_responses_survive_the_binary_archive() {
     use meta_signal_capsule_nexus::{Configured_Data, Owner, Readiness, Set, Timeout};
-    archive_round_trip(&Query::Configure(Set::CallTimeout(Timeout(5000))));
-    archive_round_trip(&Response::Configured(Configured_Data {
+    archive_round_trip(&Input::Configure(Set::CallTimeout(Timeout(5000))));
+    archive_round_trip(&Output::Configured(Configured_Data {
         set: Set::Polling(Timeout(100)),
         owner: Owner::Translator,
         readiness: Readiness::Ready,
