@@ -49,13 +49,14 @@ mod text {
     #[test]
     fn responses_round_trip() {
         round_trip::<Output>("Configured.{ CallTimeout.5000 Nexus Ready }");
-        round_trip::<Output>("Configured.{ Polling.100 Translator Awaiting.[ HerdrPath ] }");
+        round_trip::<Output>("Configured.{ StartTimeout.100 Translator Awaiting.[ HerdrPath ] }");
         round_trip::<Output>("ConfigureRefused.UnknownPeer.peerOne");
     }
 
     #[test]
     fn wrong_shapes_and_unknown_variants_are_refused() {
         assert!(read::<Input>("Configure.Frobnicate.1").is_err());
+        assert!(read::<Input>("Configure.Polling.100").is_err());
         assert!(read::<Input>("Configure.TextBudget.{ 1024 }").is_err());
         assert!(read::<Input>("Configure.CallTimeout.fast").is_err());
         assert!(read::<Output>("Configured.{ CallTimeout.5000 Nobody Ready }").is_err());
@@ -90,7 +91,7 @@ fn queries_and_responses_survive_the_binary_archive() {
     use meta_signal_capsule_nexus::{Configured_Data, Owner, Readiness, Set, Timeout};
     archive_round_trip(&Input::Configure(Set::CallTimeout(Timeout(5000))));
     archive_round_trip(&Output::Configured(Configured_Data {
-        set: Set::Polling(Timeout(100)),
+        set: Set::StartTimeout(Timeout(100)),
         owner: Owner::Translator,
         readiness: Readiness::Ready,
     }));

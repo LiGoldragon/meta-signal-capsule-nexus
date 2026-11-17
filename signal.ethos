@@ -5,7 +5,7 @@ Signal
   ConfigureRefused.ConfigurationRefusal ]
 [ Owner.[ Nexus Translator ]                          ; types
   SettingName.[ HerdrPath CallTimeout OutputLimit TextBudget
-                 StartTimeout Polling FrameCapacity TransportTimeout SubscriberCapacity Peer ]
+                 StartTimeout FrameCapacity TransportTimeout SubscriberCapacity Peer ]
   Readiness.[ Awaiting.Vector<SettingName>
               Ready ]
   PathValue.String
@@ -19,7 +19,6 @@ Signal
         OutputLimit.ByteLimit
         TextBudget.BudgetValue
         StartTimeout.Timeout
-        Polling.Timeout
         FrameCapacity.ByteLimit
         TransportTimeout.Timeout
         SubscriberCapacity.Integer

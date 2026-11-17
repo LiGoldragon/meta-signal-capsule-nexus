@@ -44,11 +44,11 @@
         "protos": "protos"
       },
       "locked": {
-        "lastModified": 1794880330,
-        "narHash": "sha256-rF52q4QMnRebg4YpO+VRJQpKDBGNJSap5VD5yDOPs0c=",
+        "lastModified": 1794887808,
+        "narHash": "sha256-iMhwlp3gvrYTzqTDbwQJJc3BniEImWNetYVxxl5vpRQ=",
         "owner": "LiGoldragon",
         "repo": "ethos-zero",
-        "rev": "b97d9526909a1ecebf61339f5723eaca53de5dca",
+        "rev": "2999292dc67c8608e54d32c333c550b29153cbff",
         "type": "github"
       },
       "original": {
