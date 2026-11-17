@@ -614,7 +614,7 @@ rec {
       };
       "meta-signal-capsule-nexus" = rec {
         crateName = "meta-signal-capsule-nexus";
-        version = "1.0.0";
+        version = "1.0.1";
         edition = "2021";
         src = lib.cleanSourceWith { filter = sourceFilter;  src = ./.; };
         libName = "meta_signal_capsule_nexus";
@@ -1232,14 +1232,14 @@ rec {
       };
       "signal" = rec {
         crateName = "signal";
-        version = "11.1.0";
+        version = "11.2.0";
         edition = "2024";
         links = "signal";
         workspace_member = null;
         src = pkgs.fetchgit {
           url = "https://github.com/LiGoldragon/signal";
-          rev = "b145ddb40c73d2545697fd9c8e049e562978a3ac";
-          sha256 = "1jz3hjcflxr5ngipksmm1vd39xjkbp58fvs7yfkv564ddccbin7p";
+          rev = "4f5cbb9322ecae7a8821439179e778d495d7804a";
+          sha256 = "14f2bwprz32psr58n9i36padya0r4p54hwm1yq145h1ab6nawvk2";
         };
         dependencies = [
           {
@@ -1460,13 +1460,13 @@ rec {
       };
       "translator" = rec {
         crateName = "translator";
-        version = "0.5.1";
+        version = "0.5.2";
         edition = "2021";
         workspace_member = null;
         src = pkgs.fetchgit {
           url = "https://github.com/LiGoldragon/translator";
-          rev = "2310db311e8bd3cbbda308fbc3d8ac76c14049c7";
-          sha256 = "1qxjkm7qszmiwnmb9yhmbynfdz4lk9qr36107ym4lya0xkc5ffs5";
+          rev = "29601a3485bf8b726e7a2da7b3fa73a8a8bce58d";
+          sha256 = "1jsa473338b64cr1bsbwmk1zczs3vba66qxhf5yw4kgaai1ich7z";
         };
         dependencies = [
           {
