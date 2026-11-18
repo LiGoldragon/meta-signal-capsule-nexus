@@ -1,5 +1,12 @@
 # Upgrades
 
+## 0.5.0 — 1.0.0 and 1.0.1 renumbered to the 0.x line
+
+A breaking change on a 0.x crate takes the next minor, so the contract published as 1.0.0 and
+1.0.1 is renumbered 0.5.0. The contract, its archive, its digest and its Datom text are those of
+1.0.1 (76b4235); only the version moves. 1.0.0 and 1.0.1 were never deployed and leave the build
+base's registry. A consumer pins 0.5.0 at its new commit in place of 1.0.1.
+
 ## 1.0.1 — signal 11.2.0, translator 0.5.2
 
 Only the pins move: signal 11.2.0 (4f5cbb9), which adds `signal::Following`, and translator 0.5.2 (29601a3), which takes it. No type, archive or digest of this contract changes. A consumer repins both with it, so `links = "signal"` finds one package in its graph.
